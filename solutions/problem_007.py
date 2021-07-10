@@ -1,19 +1,30 @@
-def is_char(code):
-    return 0 if code > 26 or code < 1 else 1
-
 def get_message_count(code):
-    code_str = str(code)
-    if len(code_str) == 1:
-        count = 1
-    elif len(code_str) == 2:
-        count = 1 + is_char(code)
-    else:
-        count = get_message_count(int(code_str[1:]))
-        if is_char(int(code_str[:2])):
-            count += get_message_count(int(code_str[2:]))
+    digits = str(code)
+	n=len(digits)
+	count1=0
+	count2=1
 
-    return count
+	for i in range(n):
+		count=0
+		# If the last digit is not 0, then last
+		# digit must add to the number of words
+		if digits[i]>'0':
+			count=count2
 
+		# If second last digit is smaller than 2
+        # and last digit is smaller than 7, then
+        # last two digits form a valid character
+		if (digits[i - 1] == '1' or
+			(digits[i - 1] == '2' and
+				digits[i] < '7')):
+			count+= count1
+		
+		count1=count2
+		count2=count
+
+		print("{}: {},{}".format(i,count1,count2))
+
+	return count2;
 
 assert get_message_count(81) == 1
 assert get_message_count(11) == 2
