@@ -25,6 +25,12 @@ def get_factors(array):
     
     return output_array
 
+#simple way use divide for each factor :)
+def productList(list):
+    totalproduct = 1
+    for x in list:
+        totalproduct*= x
+    return [ int(totalproduct/x) for x in list]
 
 assert get_factors([1, 2, 3, 4, 5]) == [120, 60, 40, 30, 24]
 assert get_factors([3, 2, 1]) == [2, 3, 6]
