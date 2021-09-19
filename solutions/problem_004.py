@@ -42,6 +42,8 @@ def get_missing_number(array):
         if num > 0:
             return i + 1
 
+#test duplicate value 
+assert get_missing_number([3, 4, -1, 1,1]) == 2
 
 assert get_missing_number([3, 4, -1, 1]) == 2
 assert get_missing_number([1, 2, 0]) == 3
