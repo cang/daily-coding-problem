@@ -1,3 +1,4 @@
+'''
 def get_step_combos(num_steps, step_sizes):
     combos = list()
     
@@ -28,13 +29,44 @@ def goStairCase(n,stepsize):
 		ret+=goStairCase(n-i,stepsize if stepsize<=n-i else n-i)
 	return ret
 
-# Python3 program to count the number
-# of ways to reach n'th stair when
-# user climb 1 .. m stairs at a time.
- 
-# Function to count number of ways
-# to reach s'th stair
-def countWays(n, m):
+'''
+
+import time
+
+def goStairCase(n,m):
+    if n<=1:
+        return 1
+    ret=0
+    for j in range(1,m+1):
+        if j<=n:
+            ret+=goStairCase(n-j,m)
+    return ret
+
+#Dynamic Programming
+def goStairCaseDp(n,m):
+    f=[1,1]
+    for i in range(2,n+1):
+        ret=0
+        for j in range(1,m+1):
+            if j<=i:
+                ret+= f[i-j]
+        f.append(ret)
+    return f[n]
+
+#keep only m last element 
+def goStairCaseDpOptimize(n,m):
+    f = [0]*m
+    f[-1]=f[-2]=1
+    for i in range(2,n+1):
+        ret=sum(f) #dupliate here need optimize 2
+        for j in range(1,m):
+            f[j-1]=f[j]
+        f[m-1]=ret
+        #print(f)
+    return f[-1]
+   
+#best update
+def goStairCaseDpOptimize2(n, m):
     temp = 0
     res = [1]
     for i in range(n):
@@ -51,6 +83,15 @@ def countWays(n, m):
 # Driver Code
 n = 5
 m = 3
- 
-print(countWays(n, m))
-print(goStairCase(n,m))
+
+start = time.time()
+print(goStairCase(n,m),time.time() - start)
+
+start = time.time()
+print(goStairCaseDp(n,m),time.time() - start)
+
+start = time.time()
+print(goStairCaseDpOptimize(n,m),time.time() - start)
+
+start = time.time()
+print(goStairCaseDpOptimize2(n, m),time.time() - start) 
