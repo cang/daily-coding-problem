@@ -92,7 +92,7 @@ Given a string representing the file system in the above format, return the leng
 def get_path_length(s):
     n=len(s)
     ret=0
-    listsize=[0]*10
+    listsize=[]
     i=i0=0
     while i <=n:
         if i==n or s[i]=='\n':
@@ -107,9 +107,12 @@ def get_path_length(s):
 
                 csize+=listsize[tabcounter]
                 tabcounter+=1
+                
+            if tabcounter<len(listsize):
+                listsize[tabcounter]=len(token)-tabcounter
+            else:
+                listsize.append(len(token)-tabcounter)
 
-            listsize[tabcounter]=len(token)-tabcounter
-            
             if ret<csize:
                 ret=csize
 
@@ -120,4 +123,4 @@ def get_path_length(s):
     return ret
 
 s="dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
-print(get_path_length(s))
+assert get_path_length(s)==32
