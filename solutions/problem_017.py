@@ -1,3 +1,4 @@
+'''
 class Node:
     def __init__(self, name, pathtype):
         self.name = name
@@ -58,3 +59,65 @@ assert get_longest_path("dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext") == 18
 assert get_longest_path(
     "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\t" +
     "subsubdir2\n\t\t\tfile2.ext") == 29
+'''
+
+'''
+This problem was asked by Google.
+
+Suppose we represent our file system by a string in the following manner:
+
+The string "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext" represents:
+
+dir
+    subdir1
+    subdir2
+        file.ext
+The directory dir contains an empty sub-directory subdir1 and a sub-directory subdir2 containing a file file.ext.
+
+The string "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext" represents:
+
+dir
+    subdir1
+        file1.ext
+        subsubdir1
+    subdir2
+        subsubdir2
+            file2.ext
+The directory dir contains two sub-directories subdir1 and subdir2. subdir1 contains a file file1.ext and an empty second-level sub-directory subsubdir1. subdir2 contains a second-level sub-directory subsubdir2 containing a file file2.ext.
+
+We are interested in finding the longest (number of characters) absolute path to a file within our file system. For example, in the second example above, the longest absolute path is "dir/subdir2/subsubdir2/file2.ext", and its length is 32 (not including the double quotes).
+
+Given a string representing the file system in the above format, return the length of the longest absolute path to a file in the abstracted file system. If there is no file in the system, return 0.
+'''
+def get_path_length(s):
+    n=len(s)
+    ret=0
+    listsize=[0]*10
+    i=i0=0
+    while i <=n:
+        if i==n or s[i]=='\n':
+            token=s[i0:i]
+            i0=i+1
+
+            tabcounter=0
+            csize=len(token)
+            for t in token:
+                if t!='\t':
+                    break
+
+                csize+=listsize[tabcounter]
+                tabcounter+=1
+
+            listsize[tabcounter]=len(token)-tabcounter
+            
+            if ret<csize:
+                ret=csize
+
+            print(token,csize,tabcounter,listsize)
+
+        i+=1
+
+    return ret
+
+s="dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
+print(get_path_length(s))
