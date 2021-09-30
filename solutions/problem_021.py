@@ -59,7 +59,9 @@ def min_classroom(arr):
 
 
 a = [(30, 75), (0, 50), (60, 150)]
-print(min_classroom(sorted(a)))
+print(min_classroom(a))
+a = [(150,250),(50, 90),(0, 100),(210,310),(120,200),(20, 70),(60,150),(140,300)]
+print(min_classroom(a))
 
 
 
