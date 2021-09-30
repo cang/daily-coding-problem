@@ -1,3 +1,4 @@
+'''
 class Node:
     def __init__(self, x):
         self.val = x
@@ -68,3 +69,71 @@ assert get_intersection_node(
     get_nodes([0, 3, 7, 8, 10]), get_nodes([99, 1, 8, 10])).val == 8
 assert get_intersection_node(
     get_nodes([7, 8, 10]), get_nodes([99, 1, 8, 10])).val == 8
+'''
+
+
+class Node:
+	def __init__(self,val,next=None):
+		self.val=val
+		self.next=next
+
+def printLinkedList(node):
+	while node:
+		print(node.val,'->' ,end='')
+		node=node.next
+	print()
+
+def findIntersectNodeWithSet(node1,node2):
+	mset=set()
+	node=node1
+	while node:
+		mset.add(node)
+		node=node.next
+
+	node=node2
+	while node and node not in mset:
+		node=node.next
+
+	if node in mset:
+		return node
+
+	return None
+
+def countNode(root):	
+	node=root
+	count=0
+	while node:
+		count+=1
+		node=node.next
+
+
+	print(count)
+	return count
+
+def findIntersectNode(node1,node2):
+	n1=countNode(node1)
+	n2=countNode(node2)
+	longnode,shortnode,difcount = (node1,node2,n1-n2) if n1>n2 else (node2,node1,n2-n1)
+
+	count=0
+	while count<difcount and longnode:
+		count+=1
+		longnode=longnode.next
+
+	while longnode:
+		if longnode.val==shortnode.val:
+			return longnode
+		longnode=longnode.next
+		shortnode=shortnode.next
+
+	return None
+
+#For example, given A = 3 -> 7 -> 8 -> 10 and B = 99 -> 1 -> 8 -> 10, return the node with value 8.
+node8=Node(8,Node(10))
+node7=Node(7,node8)
+node1=Node(1,node8)
+node3=Node(3,node7)
+node99=Node(99,node1)
+
+
+printLinkedList(findIntersectNode(node3,node99))
